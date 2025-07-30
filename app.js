@@ -8,7 +8,7 @@ app.use(cors());
 
 module.exports = app;
 
-const gigs = [{
+let gigs = [{
         id: 1,
         name: "The Arctic Monkeys Live",
         image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
@@ -38,11 +38,23 @@ app.get("/gigs", (req, res) => {
 });
 
 app.get("/gigs/:id", (req, res) => {
-  paramId = req.params.id;
+  let paramId = parseInt(req.params.id);
   let gig = gigs.filter((item) => {
-    return item.id == paramId;
+    return item.id === paramId;
   });
-console.log("gig", gig);
+// console.log("gig", gig);
   res.send(gig);
 });
+
+app.delete("/gigs/:id", (req, res) =>{
+  console.log("delete route");
+  
+  let paramId = parseInt(req.params.id);
+  gigs = gigs.filter((item) => {
+    return item.id !== paramId;
+  });
+  res.status(200).json({message: "Gig deleted succesfully"});
+  console.log("gigs list", gigs);
+  
+})
 
