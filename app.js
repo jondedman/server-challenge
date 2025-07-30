@@ -8,8 +8,7 @@ app.use(cors());
 
 module.exports = app;
 
-app.get("/gigs", (req, res) => {
-  gigs = [      {
+const gigs = [{
         id: 1,
         name: "The Arctic Monkeys Live",
         image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
@@ -32,6 +31,18 @@ app.get("/gigs", (req, res) => {
         description: "A three-day electronic music festival featuring top DJs and producers from around the world with stunning light shows.",
         date: "2025-10-12",
         location: "Central Park, New York"
-      }]
+      }];
+
+app.get("/gigs", (req, res) => {
   res.send(gigs);
-})
+});
+
+app.get("/gigs/:id", (req, res) => {
+  paramId = req.params.id;
+  let gig = gigs.filter((item) => {
+    return item.id == paramId;
+  });
+console.log("gig", gig);
+  res.send(gig);
+});
+
