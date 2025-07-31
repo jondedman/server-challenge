@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("./app.js");
+const {app} = require("./app.js");
 
 describe("/gigs/:id", () => {
   test("GET - it responds with a single gig objects", async() => {

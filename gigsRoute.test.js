@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("./app.js");
+const {app} = require("./app.js");
 
 describe("/gigs", () => {
   test("GET - it responds with an array of gig objects", async() => {

@@ -1,7 +1,10 @@
 const request = require("supertest");
-const app = require("./app.js");
+const { app, repopulateGigs } = require("./app.js"); 
 
 describe("/gigs/:id", () => {
+    beforeEach(() => {
+    repopulateGigs(); // Reset data before each test
+  });
   test("DELETE - it moves the corresponding gig object from the data", async() => {
     const deleteResponse = await request(app).delete("/gigs/2");
     expect(deleteResponse.status).toBe(200);
@@ -22,5 +25,34 @@ describe("/gigs/:id", () => {
         date: "2025-10-12",
         location: "Central Park, New York"
       }]);
+      
 });
+test("DELETE - returns 404 for non-existent gig ID", async() => {
+    const response = await request(app).delete("/gigs/999");
+    expect(response.status).toBe(404);
+  });
+
+  test("DELETE - returns appropriate response body", async() => {
+    const response = await request(app).delete("/gigs/1");
+    expect(response.body).toHaveProperty('message');
+    expect(response.body.message).toMatch(/deleted/i);
+  });
+
+  test("DELETE - handles invalid ID format", async() => {
+    const response = await request(app).delete("/gigs/abc");
+    expect(response.status).toBe(404);
+  });
+
+  test("DELETE - reduces array length by 1", async() => {
+    const initialResponse = await request(app).get("/gigs");
+    
+    const initialLength = initialResponse.body.length;
+    
+    
+    await request(app).delete("/gigs/1");
+    
+    const finalResponse = await request(app).get("/gigs");
+    
+    expect(finalResponse.body).toHaveLength(initialLength - 1);
+  });
 })
