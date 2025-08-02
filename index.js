@@ -1,4 +1,4 @@
-const app = require("./app.js");
+const {app} = require("./app.js");
 
 const port = 3000; //defining what port the application should use 
 

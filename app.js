@@ -61,8 +61,8 @@ let gigs = [{
       }
 
 app.get("/gigs", (req, res) => {
-  console.log("gigs endpoint");
-  console.log(gigs.length);
+  // console.log("gigs endpoint");
+  // console.log(gigs.length);
   
   
   res.send(gigs);
