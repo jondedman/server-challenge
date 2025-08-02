@@ -6,8 +6,6 @@ app.use(express.json())
 
 app.use(cors());
 
-// module.exports = app;
-
 let gigs = [{
         id: 1,
         name: "The Arctic Monkeys Live",
@@ -34,6 +32,8 @@ let gigs = [{
       }];
 
       const repopulateGigs = () => {
+        // console.log("repop called");
+        
         gigs = [{
               id: 1,
               name: "The Arctic Monkeys Live",
@@ -61,16 +61,25 @@ let gigs = [{
       }
 
 app.get("/gigs", (req, res) => {
+  console.log("gigs endpoint");
+  console.log(gigs.length);
+  
+  
   res.send(gigs);
 });
 
 app.get("/gigs/:id", (req, res) => {
   let paramId = parseInt(req.params.id);
-  let gig = gigs.filter((item) => {
+  let gig = gigs.find((item) => {
     return item.id === paramId;
   });
+  // console.log("gig", gig);
+  
+  if (!gig) {
+    return res.status(404).json({error: "Gig not found"});
+  }
 // console.log("gig", gig);
-  res.send(gig);
+  res.status(200).json(gig);
 });
 
 app.delete("/gigs/:id", (req, res) =>{
