@@ -96,7 +96,7 @@ app.delete("/gigs/:id", (req, res) =>{
   gigs = gigs.filter((item) => {
     return item.id !== paramId;
   });
-  res.status(200).json({message: "Gig deleted succesfully"});
+  res.status(200).json({message: "Successfully deleted gig"});
   
 })
 

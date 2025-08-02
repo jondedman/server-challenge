@@ -47,7 +47,9 @@ try {
     const response = await fetch(`${BASE_URL}/gigs/${id}`, {
         method: 'DELETE'
     })
-    return response
+
+    const data = await response.json();
+    return data
 } catch (error) {
     
 }
